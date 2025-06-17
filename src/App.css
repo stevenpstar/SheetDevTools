@@ -1,0 +1,85 @@
+html, body {
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+#root {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  margin: 0 auto;
+  outline: 0;
+  padding: 0;
+}
+
+.main-page {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sheet-display {
+  position: relative;
+  width: 60%;
+}
+
+.data-display {
+  display: flex;
+  justify-content: center;
+  background-color: #0d1117;
+  max-height: 100vh;
+  height: 100vh;
+  overflow-y: scroll;
+  flex-grow: 3;
+  max-width: 40%;
+}
+
+.json-view {
+  margin: 1em;
+  max-height: 90vh;
+}
+
+.mxml-view {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.tab-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #161d26;
+}
+
+button {
+  background-color: #0d1117;
+  border-radius: 0px;
+  font-size: 12px;
+  border: 0px;
+  border-left: 2px solid #0d1117;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.button-selected {
+  border-left: 2px solid #FD8A8A;
+}
+
+.button-img {
+}
+
+button:hover {
+  background-color: #FD8A8A;
+  border: 0px;
+}
+
