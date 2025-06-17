@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   outline: 0;
   padding: 0;
+  background-color: #161d26; 
 }
 #root {
   position: absolute;
@@ -26,6 +27,7 @@ html, body {
 .sheet-display {
   position: relative;
   width: 60%;
+  flex-grow: 3;
 }
 
 .data-display {
@@ -35,8 +37,8 @@ html, body {
   max-height: 100vh;
   height: 100vh;
   overflow-y: scroll;
-  flex-grow: 3;
   max-width: 40%;
+  width: 40%;
 }
 
 .json-view {

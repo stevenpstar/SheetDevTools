@@ -231,7 +231,7 @@ function App() {
               }
               console.log("playing notes: ", sinthNotes);
               Sinth.initplay(sinthNotes);
-              Sinth.play(aContext.current, aSample.current, 60, 100, () => {});
+              Sinth.play(aContext.current, aSample.current, 120, 100, () => {});
               console.log("Should be playing!");
             }}
             >
