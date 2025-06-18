@@ -137,6 +137,7 @@ interface NoteProps {
     Editable?: boolean;
     Grace: boolean;
     Voice: number;
+    Accidental: number;
 }
 declare class Note implements ISelectable {
     Beat: number;
@@ -600,6 +601,7 @@ interface lNote {
     Editable?: boolean;
     Grace: boolean;
     Voice: number;
+    Accidental: number;
 }
 interface lMeasure {
     Clefs: Clef[];
@@ -620,9 +622,13 @@ interface LoadStructure {
 declare const LoadSheet: (sheet: Sheet, page: Page, cam: Camera, instr: Instrument, savedJson: string, callback: (msg: Message) => void) => void;
 declare const SaveSheet: (sheet: Sheet) => string;
 
-declare enum XMLClef {
-    G = 0
-}
+type XMLClef = {
+    Type: string;
+    Staff: number;
+};
+type XMLStaff = {
+    Number: number;
+};
 type XMLNote = {
     ID: number;
     Beat: number;
@@ -632,10 +638,12 @@ type XMLNote = {
     Staff: number;
     Grace: boolean;
     Voice: number;
+    Alter: number;
 };
 type XMLMeasure = {
     ID: number;
-    Clef: XMLClef;
+    Clefs: XMLClef[];
+    Staves: XMLStaff[];
     Key: string;
     TimeSignature: {
         top: number;
@@ -675,6 +683,11 @@ declare class App {
         count: number;
     };
     PitchMap: Map<number, MappedMidi>;
+    PlaybackTimer: number;
+    Playing: boolean;
+    PlaybackTempo: number;
+    PlaybackMeasureIndex: number;
+    AudioContext: AudioContext;
     DraggingNote: boolean;
     StartLine: number;
     EndLine: number;
@@ -742,6 +755,7 @@ declare class App {
     AddDynamic(dynString: string): void;
     AddArticulation(type: ArticulationType): void;
     CycleActiveVoice(): void;
+    SetPlaying(playing: boolean, tempo: number, aContext: AudioContext): void;
 }
 
 declare namespace sheet {
@@ -762,4 +776,4 @@ declare namespace sheet {
     function ChangeTimeSignature(top: number, bottom: number, transpose?: boolean): void;
 }
 
-export { App, ClearMessage, type ConfigSettings, FromPitchMap, GeneratePitchMap, type KeyMapping, KeyPress, LoadSheet, type LoadStructure, type MappedMidi, type MeasureSettings, type Message, MessageType, Note, type NoteProps, ReturnLineFromMidi, ReturnMidiNumber, SaveSheet, type Theme, type TupleDetails, type lMeasure, type lNote, sheet };
+export { App, ClearMessage, Clef, type ConfigSettings, type Division, FromPitchMap, GeneratePitchMap, type KeyMapping, KeyPress, LoadSheet, type LoadStructure, type MappedMidi, Measure, type MeasureProps, type MeasureSettings, type Message, MessageType, Note, type NoteProps, ReturnLineFromMidi, ReturnMidiNumber, SaveSheet, type Theme, type TupleDetails, type lMeasure, type lNote, sheet };

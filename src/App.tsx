@@ -14,7 +14,7 @@ import { useState, useRef, useEffect } from 'react';
 import 'react-json-view-lite/dist/index.css';
 import { githubDarkTheme, JsonEditor } from 'json-edit-react';
 import { Sinth, type Note as SNote } from "../modules/sinth/main.mjs";
-import { ConvertToSinthNotes } from './SinthConversion';
+import { ConvertToSinthNotes, ConvertToSinthNotesNew } from './SinthConversion';
 
 const defaultTheme: Theme = {
   NoteElements: "black",
@@ -30,10 +30,10 @@ const SheetConfig: ConfigSettings = {
   CameraSettings: {
     DragEnabled: true,
     ZoomEnabled: true,
-    Zoom: 1,
+    Zoom: 0.75,
     StartingPosition: { x: 20, y: 20 },
     CenterMeasures: false,
-    CenterPage: false,
+    CenterPage: true,
   },
   FormatSettings: {
     MeasureFormatSettings: { Selectable: false },
@@ -105,7 +105,13 @@ function App() {
       const objString: string = msg.messageData.Message.obj as string;
       const obj = JSON.parse(objString);
       setCurrentState(obj);
-      setSinthNotes(ConvertToSinthNotes(obj.Measures as lMeasure[]));
+    }
+  }
+
+  const SinthCallback = (n: any[]) => {
+    if (sheetApp) {
+      sheetApp.Selector.DeselectAll();
+      n.forEach(note => {note.Selected = true;});
     }
   }
 
@@ -126,6 +132,7 @@ function App() {
     if (sheetApp) {
       console.log("Loading from MXML");
       sheetApp.LoadFromMXML(loadedMXML);
+      setSinthNotes(ConvertToSinthNotesNew(sheetApp.Sheet.Measures));
     }
   }, [loadedMXML])
 
@@ -208,7 +215,8 @@ function App() {
             data={loadedMXML}
             setData={setLoadedMXML}
             viewOnly={true}
-            theme={githubDarkTheme} />
+            theme={githubDarkTheme} 
+            collapse={1}/>
           </div>
         </div>
         }
@@ -229,10 +237,10 @@ function App() {
               if (!aSample.current) {
                 console.error("Audio Sample not found");
               }
-              console.log("playing notes: ", sinthNotes);
+
               Sinth.initplay(sinthNotes);
               Sinth.play(aContext.current, aSample.current, 120, 100, () => {});
-              console.log("Should be playing!");
+              sheetApp.SetPlaying(true, 120, aContext.current);
             }}
             >
               <img src="../public/play.svg" />

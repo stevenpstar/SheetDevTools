@@ -1,6 +1,10 @@
-declare enum XMLClef {
-    G = 0
-}
+type XMLClef = {
+    Type: string;
+    Staff: number;
+};
+type XMLStaff = {
+    Number: number;
+};
 type XMLNote = {
     ID: number;
     Beat: number;
@@ -10,10 +14,12 @@ type XMLNote = {
     Staff: number;
     Grace: boolean;
     Voice: number;
+    Alter: number;
 };
 type XMLMeasure = {
     ID: number;
-    Clef: XMLClef;
+    Clefs: XMLClef[];
+    Staves: XMLStaff[];
     Key: string;
     TimeSignature: {
         top: number;
